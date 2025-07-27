@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bootstrap demo</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
+	crossorigin="anonymous">
+</head>
+<body>
+
+	<nav class="navbar navbar-expand-lg bg-body-tertiary">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="/">Add User</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarNav"
+				aria-controls="navbarNav" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" href="/users">View Users</a></li>
+					<li class="nav-item"><a class="nav-link" href="">Contact-Us</a></li>
+
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container mt-3">
+		<h1>View Users</h1>
+        
+        <p th:text="${msg}" class="text-success">
+
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Email</th>
+					<th>DOB</th>
+					<th>Gender</th>
+					<th>Phno</th>
+					<th>Edit</th>
+					<th>Delete</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+			  <tr th:each="user: ${users}">
+			    <td th:text="${user.userid}"></td>
+			    <td th:text="${user.fullName}"></td>
+			    <td th:text="${user.email}"></td>
+			    <td th:text="${user.dob}"></td>
+			    <td th:text="${user.gender}"></td>
+			    <td th:text="${user.phno}"></td>
+			    <td><a th:href="@{/edit?(id=${user.userid})}" class="btn btn-primary">Edit</a></td>
+			    <td><a th:href="@{/delete?(id=${user.userid})}" class="btn btn-danger">Delete</a></td>
+			    
+			    <span th:switch="${user.activeSw}">
+			      <i th:case="Y" class="fas fa-check red-text">
+			         <td><a th:href="@{/update?(id=${user.userid},status=N)}" class="btn btn-danger">De-Activate</a></td>
+			      </i>
+			        <i th:case="N" class="fas fa-check red-text">
+			         <td><a th:href="@{/update?(id=${user.userid},status=Y)}" class="btn btn-success">Activate</a></td>
+			      </i>
+			    
+			    </span>
+			    
+			  </tr>
+			</tbody>
+		</table>
+
+	</div>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+		crossorigin="anonymous"></script>
+</body>
+</html>
